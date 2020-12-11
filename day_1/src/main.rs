@@ -6,8 +6,8 @@ fn main() {
 
     let lines: Vec<&str> = file_content.split("\n").collect();
 
-    let x: Vec<i32> = lines.iter().map(|&line| line.parse::<i32>())
+    let numbers: Vec<i32> = lines.iter().map(|&line| line.parse::<i32>())
         .filter_map(Result::ok).collect();
 
-    println!("{:?}", x);
+    println!("{:?}", numbers);
 }
