@@ -1,4 +1,4 @@
-use std::fs;
+use std::{fs, num::ParseIntError};
 
 fn main() {
     let file_content: String = fs::read_to_string("src/input.txt")
@@ -6,5 +6,7 @@ fn main() {
 
     let lines: Vec<&str> = file_content.split("\n").collect();
 
-    println!("{:?}", lines);
+    let x: Vec<Result<i32, ParseIntError>> = lines.iter().map(|&line| line.parse::<i32>()).collect();
+
+    println!("{:?}", x);
 }
