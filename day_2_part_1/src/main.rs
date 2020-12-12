@@ -14,6 +14,8 @@ fn main() {
 
     let lines: Vec<&str> = file_content.lines().collect();
 
+    let mut valid_password_counter = 0;
+
     for line in lines.iter() {
         let entry_vector: Vec<&str> = line
             .splitn(2, ": ")
@@ -28,6 +30,19 @@ fn main() {
             password: entry_vector[3]
         };
 
-        println!("{:?}", entry);
+        let mut char_counter = 0;
+
+        for c in entry.password.chars() {
+            if c == entry.character {
+                char_counter += 1;
+            }
+        }
+
+        if char_counter >= entry.minimum && char_counter <= entry.maximum {
+            valid_password_counter += 1;
+            println!("{:?} is a valid password.", entry.password);
+        }
     }
+
+    println!("{:?} passwords are valid.", valid_password_counter);
 }
