@@ -6,9 +6,9 @@ fn main() {
 
     let lines: Vec<&str> = file_content.lines().collect();
 
-    println!("{:?}\n", lines);
-
-    // for x in numbers.iter() {
-    //
-    // }
+    for entry in lines.iter() {
+        let mut split = entry.splitn(2, ": ");
+        let tuple: (&str, &str) = (split.next().unwrap(), split.next().unwrap());
+        println!("{:?}", tuple);
+    }
 }
