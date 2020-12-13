@@ -7,10 +7,11 @@ fn main() {
     let lines: Vec<&str> = file_content.lines().filter(|x| *x != "").collect();
 
     for line in lines {
-        let vec: Vec<&str> = line
-            .split(" ")
-            .flat_map(|x| x.split(":"))
-            .collect(); // E.g. ["ecl:gry", "pid:860033327", "eyr:2020", "hcl:#fffffd"]
+        let vec: Vec<Vec<&str>> = line.split(" ")
+            .collect::<Vec<&str>>()
+            .iter()
+            .map(|x| x.split(":").collect())
+            .collect();
 
         println!("{:?}\n", vec);
     }
