@@ -9,6 +9,7 @@ fn main() {
     for line in lines {
         let vec: Vec<&str> = line
             .split(" ")
+            .flat_map(|x| x.split(":"))
             .collect(); // E.g. ["ecl:gry", "pid:860033327", "eyr:2020", "hcl:#fffffd"]
 
         println!("{:?}\n", vec);
