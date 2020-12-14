@@ -24,7 +24,15 @@ fn main() {
             );
         }
 
-        println!("{:?}\n", passport);
+        // println!("{:?}\n", passport);
+
+        if passport.contains_key("byr") && passport.contains_key("iyr")
+        && passport.contains_key("eyr") && passport.contains_key("hgt")
+        && passport.contains_key("hcl") && passport.contains_key("ecl")
+        && passport.contains_key("pid") /*&& passport.contains_key("cid")*/ {
+            println!("{:?} is a valid passport.\n", passport);
+        }
+
 
     }
 }
