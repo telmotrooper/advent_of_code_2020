@@ -46,6 +46,7 @@ fn main() {
 
     let re_digits = Regex::new(r"\d+").unwrap();
     let re_non_digits = Regex::new(r"\D+").unwrap();
+    let re_hexadecimal = Regex::new(r"[a-f0-9]+").unwrap();
 
     for passport in passports.iter() {
         if passport.contains_key("byr") && passport.contains_key("iyr")
@@ -76,7 +77,7 @@ fn main() {
                 continue;
             }
 
-            // Expiration Year
+            // Height
             let hgt = passport.get("hgt").unwrap();
 
             let digits = re_digits.captures(hgt);
@@ -99,6 +100,19 @@ fn main() {
             }
 
             if unit == "in" && (digits < 59 || digits > 76) {
+                continue;
+            }
+
+            // Hair Color
+            let hcl = passport.get("hcl").unwrap().to_string();
+
+            if hcl.len() != 7 || &hcl[0..1] != "#" {
+                continue;
+            }
+
+            let hexadecimal = re_hexadecimal.captures(hcl.as_str());
+
+            if hexadecimal.is_some() && hexadecimal.unwrap().get(0).unwrap().as_str().len() != 6 {
                 continue;
             }
 
