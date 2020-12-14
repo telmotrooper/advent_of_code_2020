@@ -116,8 +116,26 @@ fn main() {
                 continue;
             }
 
+            // Eye Color
+            let ecl = passport.get("ecl").unwrap();
+
+            if ecl != &"amb" && ecl != &"blu" && ecl != &"brn" && ecl != &"gry"
+            && ecl != &"grn" && ecl != &"hzl" && ecl != &"oth" {
+                continue;
+            }
+
+            // Passport ID
+            let pid = passport.get("pid").unwrap();
+
+            let digits = re_digits.captures(pid);
+            let digits = digits.unwrap().get(0).unwrap().as_str();
+
+            if digits.len() != 9 {
+                continue;
+            }
+
             valid_passport_counter += 1;
-            // println!("{:?} is a valid passport.\n", passport);
+            println!("{:?} is a valid passport.\n", passport);
         }
     }
 
