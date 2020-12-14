@@ -47,6 +47,7 @@ fn main() {
         && passport.contains_key("eyr") && passport.contains_key("hgt")
         && passport.contains_key("hcl") && passport.contains_key("ecl")
         && passport.contains_key("pid") {
+            // Birth Year
             let byr = passport.get("byr").unwrap();
             let parsed_byr: u16 = byr.parse().unwrap_or_default();
 
@@ -54,6 +55,7 @@ fn main() {
                 continue;
             }
 
+            // Issue Year
             let iyr = passport.get("iyr").unwrap();
             let parsed_iyr: u16 = iyr.parse().unwrap_or_default();
 
@@ -61,6 +63,7 @@ fn main() {
                 continue;
             }
 
+            // Expiration Year
             let eyr = passport.get("eyr").unwrap();
             let parsed_eyr: u16 = eyr.parse().unwrap_or_default();
 
