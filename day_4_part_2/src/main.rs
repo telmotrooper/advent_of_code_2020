@@ -1,3 +1,5 @@
+use regex::Regex;
+
 use std::collections::HashMap;
 use std::fs;
 
@@ -42,6 +44,9 @@ fn main() {
 
     let mut valid_passport_counter = 0;
 
+    let re_digits = Regex::new(r"\d+").unwrap();
+    let re_non_digits = Regex::new(r"\D+").unwrap();
+
     for passport in passports.iter() {
         if passport.contains_key("byr") && passport.contains_key("iyr")
         && passport.contains_key("eyr") && passport.contains_key("hgt")
@@ -71,8 +76,34 @@ fn main() {
                 continue;
             }
 
+            // Expiration Year
+            let hgt = passport.get("hgt").unwrap();
+
+            let digits = re_digits.captures(hgt);
+            let non_digits = re_non_digits.captures(hgt);
+
+            if digits.is_none() || non_digits.is_none() {
+                continue;
+            }
+
+            let unit = non_digits.unwrap().get(0).unwrap().as_str();
+
+            if unit != "cm" && unit != "in" {
+                continue;
+            }
+
+            let digits: u8 = digits.unwrap().get(0).unwrap().as_str().parse().unwrap();
+
+            if unit == "cm" && (digits < 150 || digits > 193) {
+                continue;
+            }
+
+            if unit == "in" && (digits < 59 || digits > 76) {
+                continue;
+            }
+
             valid_passport_counter += 1;
-            println!("{:?} is a valid passport.\n", passport);
+            // println!("{:?} is a valid passport.\n", passport);
         }
     }
 
