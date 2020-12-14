@@ -1,16 +1,5 @@
+use std::collections::HashMap;
 use std::fs;
-
-#[derive(Debug)]
-struct Passport<'p> {
-    byr: Option<u16>,
-    iyr: Option<u16>,
-    eyr: Option<u16>,
-    hgt: Option<&'p str>,
-    hcl: Option<&'p str>,
-    ecl: Option<&'p str>,
-    pid: Option<&'p str>,
-    cid: Option<u16>
-}
 
 fn main() {
     let file_content: String = fs::read_to_string("src/input.txt")
@@ -19,12 +8,23 @@ fn main() {
     let lines: Vec<&str> = file_content.lines().filter(|x| *x != "").collect();
 
     for line in lines {
-        let vec: Vec<Vec<&str>> = line.split(" ")
+        let entry: Vec<Vec<&str>> = line.split(" ")
             .collect::<Vec<&str>>()
             .iter()
             .map(|x| x.split(":").collect())
             .collect(); // E.g. [["hcl", "#cfa07d"], ["byr", "1929"]]
 
-        println!("{:?}\n", vec);
+
+        let mut passport: HashMap<&str, &str> = HashMap::new();;
+
+        for field in entry {
+            passport.insert(
+                field.iter().nth(0).unwrap(), 
+                field.iter().nth(1).unwrap()
+            );
+        }
+
+        println!("{:?}\n", passport);
+
     }
 }
